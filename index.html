@@ -16,17 +16,51 @@
     <!-- Fonts and icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="css/fontawesome.min.css">
+
+    <script src="BD-proyecto/datos.js"></script>
+    <script src="BD-proyecto/funciones.js"></script>
+ 
+ 
 </head>
 <body>
 
     <div id="header"></div>
 
-    <p>Cuerpo de la página</p>
+    <!-- Start Categories of The Month -->
+    <section class="container py-5">
+        <div class="row text-center pt-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Categories of The Month</h1>
+                <p>
+                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                </p>
+            </div>
+        </div>
+        <div class="row" id="categorias">
+        </div>
+    </section>
+
+    <script>
+        const categorias = obtenerCategorias();
+        categorias.forEach(cat => {
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'col-12 col-md-4 p-5 mt-3';
+            tarjeta.innerHTML = `
+                <a href="#"><img src="${cat.imagen}" class="rounded-circle img-fluid border"></a>
+                <h5 class="text-center mt-3 mb-3">${cat.nombre}</h5>
+                <p class="text-center">${cat.descripcion}</p>
+                <p class="text-center"><a class="btn btn-success" href="#">Go Shop</a></p>
+            `;
+            document.getElementById('categorias').appendChild(tarjeta);
+        });
+        </script>
+    <!-- End Categories of The Month -->
 
     <div id="footer"></div>
 
     <!-- Start Script -->
-    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></>
     <script src="js/jquery-migrate-1.2.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/templatemo.js"></script>
