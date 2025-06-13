@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Huellitas Shop</title>
+
+    <link rel="apple-touch-icon" href="img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Fonts and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+</head>
+<body>
+
+    <div id="header"></div>
+
+    <p>Cuerpo de la página</p>
+
+    <div id="footer"></div>
+
+    <!-- Start Script -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/templatemo.js"></script>
+    <script src="js/custom.js"></script>
+    <!-- End Script -->
+
+    <script>
+    function cargarFragmento(id, archivo) {
+        fetch(archivo)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById(id).innerHTML = html;
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        cargarFragmento("header", "header.html");
+        cargarFragmento("footer", "footer.html");
+    });
+    </script>
+
+    <script> 
+    document.addEventListener("DOMContentLoaded", () => { 
+        cargarFragmento("header", "header.html"); 
+        cargarFragmento("footer", "footer.html");
+        });
+        </script>
+
+</body>
+</html>
