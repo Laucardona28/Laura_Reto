@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario de Pago</title>
+
+  <!-- Bootstrap + Estilos -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+  <style>
+    body {
+      background: #f8f9fa;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .payment-form {
+      max-width: 450px;
+      margin: 60px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-form h1 {
+      color: #28a745;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    .form-control:focus {
+      border-color: #28a745;
+      box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+    }
+
+    .btn-primary {
+      background-color: #4fd26e;
+      border-color: #28a745;
+      font-weight: 500;
+    }
+
+    .btn-primary:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="payment-form">
+    <h1 class="text-center">💳 Pago Seguro</h1>
+    <form id="payment-form">
+      <div class="mb-3">
+        <label for="card-number" class="form-label">Número de Tarjeta</label>
+        <input type="text" class="form-control" id="card-number" placeholder="1234 5678 9012 3456" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="expiry-date" class="form-label">Fecha de Expiración (MM/AA)</label>
+        <input type="text" class="form-control" id="expiry-date" placeholder="MM/AA" required />
+      </div>
+
+      <div class="mb-4">
+        <label for="cvc" class="form-label">CVC</label>
+        <input type="text" class="form-control" id="cvc" placeholder="123" required />
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg">Pagar</button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
