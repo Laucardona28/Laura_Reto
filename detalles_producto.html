@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellitas Shop</title>
+
+    <!-- Íconos y estilos -->
+    <link rel="apple-touch-icon" href="img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+
+    <!-- Tus datos y funciones -->
+    <script src="BD-proyecto/datos.js"></script>
+    <script src="BD-proyecto/funciones.js"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Inicio detalles del producto -->
+
+    <!-- Open Content -->
+    <section class="bg-light">
+    <div class="container pb-5">
+        <div class="row">
+            <!-- COLUMNA 1: Imagen + Detalles -->
+            <div class="col-lg-8 mt-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <img class="card-img img-fluid" src="" alt="Card image cap" id="imagenProducto">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="h2" id="nombreProducto"></h1>
+                                <p class="h3 py-2" id="precioProducto"></p>
+                                <p class="py-2" id="clasificacionProducto"></p>
+
+                                <h6>Description:</h6>
+                                <p id="descripcionProducto"></p>
+
+                                <div class="col-auto">
+                                    <ul class="list-inline pb-3">
+                                        <li class="list-inline-item text-right">
+                                            Cantidad
+                                            <input type="hidden" name="product-quantity" id="product-quantity" value="1">
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span class="btn btn-success" id="btn-minus">-</span>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span class="badge bg-secondary" id="var-value">1</span>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <span class="btn btn-success" id="btn-plus">+</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="row pb-3">
+                                    <div class="col d-grid">
+                                        <button id="botonAgregar" class="btn btn-success btn-lg d-block w-100">Agregar</button>
+                                    </div>
+                                    <div class="col d-grid">
+                                        <button type="button" class="btn btn-success btn-lg d-block w-100" onclick="window.history.back()">Regresar</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMNA 2: CARRITO -->
+            <div class="col-lg-4 mt-5">
+                <div class="bg-light p-4 shadow rounded">
+                    <h4 class="mb-3">Carrito de Compras</h4>
+                    <p>Total: $<span id="total">0.00</span></p>
+                    <ul class="list-group mb-3" id="carrito"></ul>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-danger btn-sm" onclick="vaciarCarrito()">Vaciar</button>
+                        <a href="pago.html" class="btn btn-success btn-sm">Pagar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+   <script>
+    // Obtener el parámetro de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const codigoProducto = urlParams.get('codigoProducto');
+
+    // Obtener del localStorage el producto por su código
+    const producto = obtenerProductoPorCodigo(codigoProducto);
+
+    // Mostrar los datos del producto en la página
+    if (producto) {
+        document.getElementById('nombreProducto').textContent = producto.nombre;
+        document.getElementById('precioProducto').textContent = `$${producto.precio.toFixed(2)}`;
+        document.getElementById('descripcionProducto').textContent = producto.descripcion;
+        document.getElementById('imagenProducto').src = producto.imagen;
+
+        const estrellas = '<i class="text-warning fa fa-star"></i>'.repeat(producto.calificacion || 4) +
+                          '<i class="text-secondary fa fa-star"></i>'.repeat(5 - (producto.calificacion || 4));
+        document.getElementById('clasificacionProducto').innerHTML = estrellas;
+    }
+
+    // Cantidad selector
+    let cantidad = 1;
+    const cantidadInput = document.getElementById("product-quantity");
+    const cantidadDisplay = document.getElementById("var-value");
+
+    document.getElementById("btn-plus").addEventListener("click", () => {
+        cantidad++;
+        cantidadInput.value = cantidad;
+        cantidadDisplay.textContent = cantidad;
+    });
+
+    document.getElementById("btn-minus").addEventListener("click", () => {
+        if (cantidad > 1) {
+            cantidad--;
+            cantidadInput.value = cantidad;
+            cantidadDisplay.textContent = cantidad;
+        }
+    });
+
+    // Agregar al carrito
+    document.getElementById("botonAgregar").addEventListener("click", () => {
+    const cantidad = parseInt(document.getElementById("product-quantity").value);
+    agregarAlCarrito(codigoProducto, cantidad); // ← esto debe estar después de obtener codigoProducto
+});
+renderizarCarrito(); // Para que muestre el contenido del carrito
+</script>
+
+
+
+
+    <!-- Close Content -->
+
+    <!-- Fin detalles del producto -->
+
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.min.js"></script>
+    <!-- Si no tienes estos archivos, puedes eliminarlos o asegurarte de tenerlos en /js
+    <script src="js/templatemo.js"></script>
+    <script src="js/custom.js"></script>
+    -->
+
+    <!-- Cargar header y footer -->
+
+        <script>
+    function cargarFragmento(id, archivo) {
+        fetch(archivo)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById(id).innerHTML = html;
+            })
+            .then(() => {
+                // Este bloque se ejecuta después de cargar el header
+                const contador = sessionStorage.getItem("contadorCarrito") || 0;
+                const badge = document.getElementById("contadorCarrito");
+                if (badge) {
+                    badge.textContent = contador;
+                }
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        cargarFragmento("header", "header.html");
+        cargarFragmento("footer", "footer.html");
+    }); 
+</script>
+
+
+</body>
+</html>

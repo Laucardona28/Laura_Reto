@@ -4617,3 +4617,37 @@ readers do not read off random characters that represent icons */
 .fas {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900; }
+
+.carousel-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px; /* Antes 300px */
+  padding: 10px; /* Antes 20px */
+}
+
+.carousel-item img {
+  max-height: 150px; /* Aumentado un poco para mejor detalle */
+  width: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.carousel-caption {
+  max-width: 40%;
+  text-align: left;
+}
+
+.carousel-caption h1 {
+  font-size: 1.5rem; /* Antes 2rem */
+}
+
+.carousel-caption h2, .carousel-caption h3 {
+  font-size: 1.2rem;
+}
+
+.carousel-caption p {
+  font-size: 0.9rem;
+}
+

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huellitas Shop</title>
+
+    <!-- Íconos y estilos -->
+    <link rel="apple-touch-icon" href="img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+
+    <!-- Tus datos y funciones -->
+    <script src="BD-proyecto/datos.js"></script>
+    <script src="BD-proyecto/funciones.js"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <div id="header"></div>
+
+    <!-- Contenido principal -->
+    <div class="container py-5">
+    <div class="row">
+        <!-- Categorías -->
+        <div class="col-lg-2">
+            <h1 class="h2 pb-4">Categorías</h1>
+            <ul id="categorias" class="list-unstyled">
+                <li class="pb-3">
+                    <a class="d-flex justify-content-between h3 text-decoration-none" href="productos.html?categoria=todos">Todos</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Productos -->
+        <div class="col-lg-7">
+            <div class="row" id="productos"></div>
+            <!-- Paginación aquí si es necesario -->
+        </div>
+
+        <!-- Carrito de compras -->
+        <div class="col-lg-3 bg-light p-5">
+            <h3 class="h3 pb-2">Carrito de Compras</h3>
+            <p class="text-right pb-2">Total: $<span id="total"></span></p>
+            <ul id="carrito" class="list-group"></ul>
+
+            <div id="boton-vaciar" class="btn btn-danger text-decoration-none mt-3" onclick="vaciarCarrito()">Vaciar</div>
+            <div class="btn btn-success text-decoration-none mt-2" id="boton-pagar">
+                <a class="text-decoration-none btn-success text-white" href="pago.html" target="_blank">Pagar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Fin carrito -->
+
+
+    <!-- Paginación -->
+    <div class="row">
+        <ul class="pagination pagination-lg justify-content-end">
+            <li class="page-item disabled">
+                <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.4.1.min.js"></script>
+    <!-- Si no tienes estos archivos, puedes eliminarlos o asegurarte de tenerlos en /js
+    <script src="js/templatemo.js"></script>
+    <script src="js/custom.js"></script>
+    -->
+
+    <!-- Cargar header y footer -->
+    <script>
+    function cargarFragmento(id, archivo) {
+        fetch(archivo)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById(id).innerHTML = html;
+            })
+            .then(() => {
+                // Este bloque se ejecuta después de cargar el header
+                const contador = sessionStorage.getItem("contadorCarrito") || 0;
+                const badge = document.getElementById("contadorCarrito");
+                if (badge) {
+                    badge.textContent = contador;
+                }
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        cargarFragmento("header", "header.html");
+        cargarFragmento("footer", "footer.html");
+
+        // Mostrar categorías
+        const categorias = obtenerCategorias();
+        const categoriasContainer = document.getElementById('categorias');
+        categorias.forEach(categoria => {
+            const li = document.createElement('li');
+            li.className = 'pb-3';
+            li.innerHTML = `
+                <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="productos.html?categoria=${categoria.codigo}">
+                    ${categoria.nombre}
+                </a>`;
+            categoriasContainer.appendChild(li);
+        });
+
+        // Mostrar productos
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoria = urlParams.get('categoria');
+        const productos = obtenerProductos(categoria);
+        const productosContainer = document.getElementById('productos');
+
+        productos.forEach(producto => {
+            const col = document.createElement('div');
+            col.className = 'col-md-4';
+            col.innerHTML = `
+            <div class="card mb-4 product-wap rounded-0">
+                <div class="card rounded-0">
+                    <img class="card-img rounded-0 img-fluid" src="${producto.imagen}">
+                    <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                        <ul class="list-unstyled">
+                            <li><a class="btn btn-success text-white" mt-2 href="detalles_producto.html?codigoProducto=${producto.codigo}"><i class="fas fa-eye"></i></a></li>
+                            <li><button class="btn btn-success text-white" onclick="agregarAlCarrito('${producto.codigo}')"><i class="fas fa-cart-plus"></i></button></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a href="shop-single.html" class="h3 text-decoration-none">${producto.nombre}</a>
+                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                        <li>${producto.tallas || 'M/L/X/XL'}</li>
+                    </ul>
+                    <p class="text-center mb-0">$${producto.precio.toFixed(2)}</p>
+                    <ul class="list-unstyled d-flex justify-content-center mb-1">
+                        <li>
+                            ${'<i class="text-warning fa fa-star"></i>'.repeat(producto.calificacion || 4)}
+                            ${'<i class="text-muted fa fa-star"></i>'.repeat(5 - (producto.calificacion || 4))}
+                        </li>
+                    </ul>
+                </div>
+            </div>`;
+            productosContainer.appendChild(col);
+        });
+
+        // Mostrar el carrito al cargar la página
+        renderizarCarrito();
+    });
+</script>
+
+</body>
+</html>
+
