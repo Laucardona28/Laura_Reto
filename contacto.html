@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Huellitas Shop</title>
+
+    <link rel="apple-touch-icon" href="img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Fonts and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+ 
+ 
+</head>
+<body>
+
+    <div id="header"></div>
+
+     <!-- Start Content Page -->
+    <div class="container-fluid bg-light py-5">
+        <div class="col-md-6 m-auto text-center">
+            <h1 class="h1">Contactanos</h1>
+            <p>
+                ¿Tienes preguntas, necesitas ayuda con tu pedido o quieres recomendación para consentir a tu gatito?
+                Estamos aquí para ayudarte. Escríbenos y con gusto te atenderemos.
+            </p>
+        </div>
+    </div>
+
+    <div>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d37765.24078085885!2d-76.21688055049344!3d4.091022542975474!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e39c5c6c761990d%3A0x4b91b4e5ee425e42!2sTulu%C3%A1%2C%20Valle%20del%20Cauca!5e1!3m2!1ses!2sco!4v1749866487852!5m2!1ses!2sco" width="100%" height="300px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+<!-- Start Contact -->
+    <div class="container py-5">
+        <div class="row py-5">
+            <form class="col-md-9 m-auto" method="post" role="form">
+                <div class="row">
+                    <div class="form-group col-md-6 mb-3">
+                        <label for="inputname">Nombre</label>
+                        <input type="text" class="form-control mt-1" id="name" name="name" placeholder="Nombre">
+                    </div>
+                    <div class="form-group col-md-6 mb-3">
+                        <label for="inputemail">Email</label>
+                        <input type="email" class="form-control mt-1" id="email" name="email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="inputsubject">Asunto</label>
+                    <input type="text" class="form-control mt-1" id="subject" name="subject" placeholder="Asunto">
+                </div>
+                <div class="mb-3">
+                    <label for="inputmessage">Mensaje</label>
+                    <textarea class="form-control mt-1" id="message" name="message" placeholder="Mensaje" rows="8"></textarea>
+                </div>
+                <div class="row">
+                    <div class="col text-end mt-2">
+                        <button type="submit" class="btn btn-success btn-lg px-3">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End Contact -->
+
+
+    <div id="footer"></div>
+
+    <!-- Start Script -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/templatemo.js"></script>
+    <script src="js/custom.js"></script>
+    <!-- End Script -->
+
+    <script>
+    function cargarFragmento(id, archivo) {
+        fetch(archivo)
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById(id).innerHTML = html;
+            })
+            .then(() => {
+                // Este bloque se ejecuta después de cargar el header
+                const contador = sessionStorage.getItem("contadorCarrito") || 0;
+                const badge = document.getElementById("contadorCarrito");
+                if (badge) {
+                    badge.textContent = contador;
+                }
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        cargarFragmento("header", "header.html");
+        cargarFragmento("footer", "footer.html");
+    });
+    </script>
+
+
+</body>
+</html>
